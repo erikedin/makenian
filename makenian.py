@@ -37,20 +37,16 @@ def read_nine_letter_words(dictionary_file):
     return nine_letter_words(all_words)
 
 def select_word(words, previous_puzzles):
-    word = random.choice(words).upper()
-    sorted_letters = ''.join(sorted(word))
-
-    attempts = 0
-    while sorted_letters in previous_puzzles:
-        print(f'Skipping seen nian {word}, and selecting another one')
-        word = random.choice(words)
+    for attempts in range(10):
+        word = random.choice(words).upper()
         sorted_letters = ''.join(sorted(word))
-        attempts += 1
 
-        if attempts > 10:
-            print(f'Made 10 attempts at selecting nian, but found only puzzles that have already been used; will use {word} anyway')
+        if sorted_letters not in previous_puzzles:
             return word
 
+        print(f'Skipping seen nian {word}, and selecting another one')
+
+    print(f'Made 10 attempts at selecting nian, but found only puzzles that have already been used; will use {word} anyway')
     return word
 
 def find_puzzle(words, previous_puzzles):
